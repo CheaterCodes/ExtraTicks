@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "extraticks",
+  "version": "${version}",
+
+  "name": "ExtraTicks",
+  "description": "A mod to improve vanilla performance issues without changing game mechanics.",
+  "authors": [
+    "CheaterCodes"
+  ],
+  "contact": {
+  },
+
+  "license": "CC0-1.0",
+  "icon": "assets/extraticks/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+    ]
+  },
+  "mixins": [
+    "extraticks.mixins.json"
+  ],
+
+  "requires": {
+    "fabricloader": ">=0.4.0"
+  }
+}
