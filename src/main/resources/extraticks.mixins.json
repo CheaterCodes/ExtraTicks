@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "net.cheatercodes.todolist",
+  "package": "net.cheatercodes.extraticks",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
   ],
