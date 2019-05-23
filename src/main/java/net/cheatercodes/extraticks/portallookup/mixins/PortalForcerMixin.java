@@ -1,9 +1,6 @@
 package net.cheatercodes.extraticks.portallookup.mixins;
 
-import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
-import net.cheatercodes.extraticks.portallookup.PortalBlocksProvider;
-import net.cheatercodes.extraticks.portallookup.PortalBlocksState;
-import net.minecraft.block.Blocks;
+import net.cheatercodes.extraticks.portallookup.PortalFinder;
 import net.minecraft.block.pattern.BlockPattern;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
@@ -24,19 +21,21 @@ public class PortalForcerMixin {
     @Shadow
     private ServerWorld world;
 
-
+    //Inject at the portal lookup loop and prevent it's execution
     @ModifyConstant(method = "getPortal", constant = @Constant(intValue = -128, ordinal = 0))
     private int preventVanillaPortalLookup(int value) {
-        System.out.println("Skipping vanilla portal lookup");
+        //System.out.println("Skipping vanilla portal lookup");
         return 129;
     }
 
+    //Inject at the HEAD of the getPortal method to obtain the center of the search
     @Inject(method = "getPortal", at = @At("HEAD"))
     private void getOrigin(BlockPos origin, Vec3d vec3d_1, Direction direction_1, double double_1, double double_2, boolean boolean_1, CallbackInfoReturnable<BlockPattern.TeleportTarget> info) {
-        System.out.println("Portal lookup for " + origin);
+        //System.out.println("Portal lookup for " + origin);
         this.origin = origin;
     }
 
+    //Inject before the nullcheck to lookup the portal
     @ModifyVariable(method = "getPortal", at = @At(value="JUMP", opcode = Opcodes.IFNONNULL, shift = At.Shift.BEFORE), name = "blockPos_2")
     private BlockPos calcPos(BlockPos target) {
         //If portal already found, skip
@@ -44,49 +43,6 @@ public class PortalForcerMixin {
             return target;
         }
 
-        //Only consider portal block with no portal below
-        //Priority:
-        //Distance
-        //BiggestX
-        //BiggestZ
-        //LowestY
-
-        int minX = origin.getX() - 128;
-        int maxX = origin.getX() + 128;
-        int minZ = origin.getZ() - 128;
-        int maxZ = origin.getZ() + 128;
-        int maxY = world.getEffectiveHeight() - 1;
-
-        double minDistance = Double.MAX_VALUE;
-
-        PortalBlocksState state = ((PortalBlocksProvider)world).getPortalBlocksState();
-        LongOpenHashSet set = state.getBlocks();
-        for(long l : set) {
-            BlockPos portal = BlockPos.fromLong(l);
-            if(world.getBlockState(portal.down()).getBlock() == Blocks.NETHER_PORTAL){
-                continue;
-            }
-
-            double distance = portal.getSquaredDistance(origin);
-
-            if(distance < minDistance) {
-                target = portal;
-            }
-            // Usually comparing doubles like that should be avoided,
-            // however this is for edge cases to keep the priorities intact
-            else if(distance == minDistance) {
-                if(portal.getX() > target.getX()) {
-                    target = portal;
-                }
-                else if(portal.getZ() > target.getZ()){
-                    target = portal;
-                }
-                else if(portal.getY() < target.getY()) {
-                    target = portal;
-                }
-            }
-        }
-
-        return target;
+        return PortalFinder.findPortal(world, origin);
     }
 }
