@@ -20,7 +20,7 @@
     ]
   },
   "mixins": [
-    "extraticks.mixins.json"
+    "portallookup.mixins.json"
   ],
 
   "requires": {

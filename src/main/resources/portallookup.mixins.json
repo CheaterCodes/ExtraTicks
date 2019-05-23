@@ -1,8 +1,11 @@
 {
   "required": true,
-  "package": "net.cheatercodes.extraticks",
+  "package": "net.cheatercodes.extraticks.portallookup.mixins",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "PortalForcerMixin",
+    "BlockMixin",
+    "ServerWorldMixin",
   ],
   "client": [
   ],
