@@ -12,14 +12,15 @@ If you can find any difference between this and vanilla (apart from performance 
 
 ## Modules
 
-For easier development the logic is split into multiple modulee, each patching a different part of the game.
-The following list gives an overview about implemented fixes.
+For easier development the logic is split into multiple modules, each patching a different part of the game.
+The following list gives an overview about implemented changes.
 
 ### Nether Portal Lookup
 
-Whenever an entity travels through a nether portal minecraft checks all block in a big area for nether portal blocks.
+Whenever an entity travels through a nether portal, minecraft checks all blocks in a big area for nether portal blocks.
 This takes a lot of time and is therefore cached for a few seconds in vanilla.
 However, if it's not cached the lookup still causes huge lag spikes.
 
 This module keeps a per chunk list of all portal blocks in that chunk and uses that for the lookup.
 This way the lookup time is drastically reduced.
+However, there still will be significant lag spikes due to loading chunks.
