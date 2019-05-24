@@ -1,24 +1,22 @@
 {
   "schemaVersion": 1,
   "id": "extraticks",
-  "version": "${version}",
+  "version": "1.0.0-alpha",
 
   "name": "ExtraTicks",
-  "description": "A mod to improve vanilla performance issues without changing game mechanics.",
+  "description": "A server side mod to improve vanilla performance issues without changing game mechanics.",
   "authors": [
     "CheaterCodes"
   ],
   "contact": {
+    "sources": "https://github.com/CheaterCodes/ExtraTicks",
+    "issues": "https://github.com/CheaterCodes/ExtraTicks/issues"
   },
 
-  "license": "CC0-1.0",
+  "license": "MIT",
   "icon": "assets/extraticks/icon.png",
 
-  "environment": "*",
-  "entrypoints": {
-    "main": [
-    ]
-  },
+  "environment": "server",
   "mixins": [
     "portallookup.mixins.json"
   ],
