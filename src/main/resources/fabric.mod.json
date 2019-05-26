@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "extraticks",
-  "version": "1.0.0-alpha",
+  "version": "1.0.0-alpha.1",
 
   "name": "ExtraTicks",
   "description": "A server side mod to improve vanilla performance issues without changing game mechanics.",

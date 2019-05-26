@@ -34,7 +34,7 @@ public class PortalForcerMixin {
     }
 
     //Inject before the null-check to lookup the portal
-    @ModifyVariable(method = "getPortal", at = @At(value="JUMP", opcode = Opcodes.IFNONNULL, shift = At.Shift.BEFORE), name = "blockPos_2")
+    @ModifyVariable(method = "getPortal", at = @At(value="JUMP", opcode = Opcodes.IFNONNULL, shift = At.Shift.BEFORE), ordinal = 1)
     private BlockPos calcPos(BlockPos target) {
         //If portal already found, skip
         if(target != null) {
